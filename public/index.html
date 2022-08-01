@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Display Users Data</title>
+  </head>
+  <body>
+    <div id="listOfUsers"></div>
+  </body>
+  <script>
+    let people = [];
+    const users = document.getElementById("listOfUsers");
+
+    fetch("http://localhost:6969/users")
+      .then((res) => res.json())
+      .then((data) => {
+        people = data;
+        console.log(data);
+        displayUsers(data);
+      });
+
+    function displayUsers(users) {
+      //create a variable that will get the id in html
+
+      listOfUsers.innerHTML = "";
+      //Loop through users to get values onto the screen
+      users.forEach((user) => {
+        //html display
+        listOfUsers.innerHTML += `
+            <div>
+                <p>PUSHIN P</p>
+                <h1>${user.user_id}</h1>
+                <h2>${user.full_name}</h2>
+                <h3>${user.email}</h3>
+                <h4>${user.password}</h4>
+                <h5>${user.billing_address}</h5>
+                <h6>${user.default_shipping_address}</h6>
+            </div>
+            `;
+      });
+    }
+    displayUsers(users);
+  </script>
+</html>

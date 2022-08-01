@@ -18,6 +18,12 @@ app.set("port", process.env.PORT || 6969);
 app.use(express.json());
 //add routes
 
+//Import from HTML
+app.use(express.static("Public"));
+
+app.get("/userRoute", function (req, res) {
+  res.sendFile(__dirname + "/userRoute" + "index.html");
+});
 
 //use routes
 app.use("/users", userRoute);
