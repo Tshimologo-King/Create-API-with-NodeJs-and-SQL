@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+  </head>
+  <body>
+    <div class="nav">
+      <a href="./index.html"><button>Home</button></a>
+    </div>
+
+    <form id="form">
+      <label for="email">Email</label>
+      <input
+        type="text"
+        name="email"
+        placeholder="Enter Email..."
+        required
+        id="email"
+      />
+      <label for="password">Password</label>
+      <input
+        type="text"
+        name="password"
+        placeholder="Enter Password..."
+        required
+        id="password"
+      />
+      <button type="submit">Submit</button>
+      <a href="./forgotPassword.html">Forgot Password ?</a>
+    </form>
+  </body>
+  <script>
+    const form = document.getElementById("form");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const userEmail = document.getElementById("email").value;
+      const psw = document.getElementById("password").value;
+
+      fetch("http://localhost:6969/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: userEmail,
+          password: psw,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+        });
+    });
+  </script>
+</html>

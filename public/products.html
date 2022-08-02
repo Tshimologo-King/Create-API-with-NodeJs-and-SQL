@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="nav">
+        <a href="./index.html"><button>Home</button></a>
+    </div>
+
+    <div id="listOfProducts">
+    </div>
+</body>
+<script>
+    let items = [];
+    const products = document.getElementById("listOfProducts");
+
+    fetch("http://localhost:6969/products")
+      .then((res) => res.json())
+      .then((data) => {
+        items = data;
+        console.log(data);
+        displayProducts(data);
+      });
+
+    function displayProducts(products) {
+      //create a variable that will get the id in html
+
+      listOfProducts.innerHTML = "";
+      //Loop through users to get values onto the screen
+      products.forEach((product) => {
+        //html display
+        listOfProducts.innerHTML += `
+            <div>
+                <p>PUSHIN P</p>
+                <h3>${product.product_id}</h3>
+                <h3>${product.sku}</h3>
+                <h3>${product.name}</h3>
+                <h3>${product.price}</h3>
+                <h3>${product.weight}</h3>
+                <h3>${product.descriptions}</h3>
+                <h3>${product.thumbnail}</h3>
+                <h3>${product.image}</h3>
+                <h3>${product.category}</h3>
+                <h3>${product.stock}</h3>
+            </div>
+            `;
+      });
+    }
+    displayProducts(products);
+</script>
+</html>

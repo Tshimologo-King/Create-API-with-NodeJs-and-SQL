@@ -124,7 +124,6 @@ router.post("/register", (req, res) => {
     let user = {
       full_name,
       email,
-
       //Sending the has value to be stored within the table
       password: hash,
       user_type,
@@ -200,7 +199,7 @@ router.post("/login", (req, res) => {
 });
 
 //Verify
-router.get("/verify", (req, res) => {
+router.get("/users/verify", (req, res) => {
   const token = req.header("x-auth-token");
   jwt.verify(token, process.env.jwtSecret, (err, decodedToken) => {
     if (err) {
