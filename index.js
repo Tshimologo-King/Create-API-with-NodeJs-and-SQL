@@ -21,7 +21,7 @@ app.use(express.json());
 //Import from HTML
 app.use(express.static("Public"));
 
-app.get("/userRoute", function (req, res) {
+app.get("/", function (req, res) {
   res.sendFile(__dirname + "/userRoute" + "index.html");
 });
 
@@ -34,12 +34,7 @@ app.use("/order", orderRoute);
 //Dont let local development give errors
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.json({ msg: "Welcome" });
-});
-
 app.listen(app.get("port"), () => {
   console.log(`Listening for calls on prt ${app.get("port")}`);
   console.log("Press Ctrl+C to exit server");
 });
-

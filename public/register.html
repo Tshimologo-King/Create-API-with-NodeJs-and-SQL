@@ -9,10 +9,12 @@
 <body>
     <h2>Register</h2>
     <form id="register">
-        <label for="email">Email</label>
-        <input type="text" name="email" placeholder="Email..." id="email">
         <label for="fullName">Full Name</label>
         <input type="text" name="fullname" placeholder="Full Name" id="fullname">
+        <label for="email">Email</label>
+        <input type="text" name="email" placeholder="Email..." id="email">
+        <label for="userType">userType</label>
+        <input type="text" name="user_type" placeholder="userType?" id="userType">
         <label for="password">Password</label>
         <input type="text" name="password" placeholder="Password" id="psw">
         <label for="phone">Phone Number</label>
@@ -31,7 +33,37 @@
     const register = document.getElementById("register");
 
     register.addEventListener("submit", function(e) {
-        e.preventDefault
-    })
+        e.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const fullname = document.getElementById("fullname").value;
+        const user_type = document.getElementById("userType").value;
+        const password = document.getElementById("psw").value;
+        const phone = document.getElementById("phoneNumber").value;
+        const country = document.getElementById("country").value;
+        const billing_address = document.getElementById("str_Address").value;
+        const default_shipping_address = document.getElementById("scnd_str_Address").value;
+
+        fetch("http://localhost:6969/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            full_name: fullname,
+            email: email,
+            password: password,
+            phone: phone,
+            country: country,
+            billing_address: billing_address,
+            default_shipping_address: default_shipping_address,
+            user_type: user_type,
+        }),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+    });
 </script>
 </html>
