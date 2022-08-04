@@ -11,7 +11,7 @@
       <a href="./index.html"><button>Home</button></a>
     </div>
 
-    <form id="form">
+    <form id="form" action="http://localhost:6969/users/login">
       <label for="email">Email</label>
       <input
         type="text"
@@ -33,13 +33,13 @@
     </form>
   </body>
   <script>
+    const userEmail = document.getElementById("email").value;
+
+    const psw = document.getElementById("password").value;
     const form = document.getElementById("form");
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
-
-      const userEmail = document.getElementById("email").value;
-      const psw = document.getElementById("password").value;
 
       fetch("http://localhost:6969/users/login", {
         method: "POST",
@@ -54,7 +54,50 @@
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
+          window.localStorage.setItem("token", JSON.stringify(data.token));
         });
+      verification();
     });
+
+    async function verification() {
+      const response = await fetch("http://localhost:6969/users/users/verify", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": JSON.parse(localStorage.token),
+        },
+      });
+
+      let check = await response.json();
+      if (userEmail === "" || psw === "") {
+        alert("Please fill in the fields");
+        console.log(check);
+      } else {
+        window.localStorage.setItem(
+          "checkUserName",
+          JSON.stringify(check.user.full_name)
+        );
+        window.localStorage.setItem(
+          "checkUserId",
+          JSON.stringify(check.user.user_id)
+        );
+        window.localStorage.setItem(
+          "checkUserType",
+          JSON.stringify(check.user.user_type)
+        );
+        window.localStorage.setItem(
+          "checkUserCountry",
+          JSON.stringify(check.user.country)
+        );
+        window.localStorage.setItem(
+          "checkUserBillingAddress",
+          JSON.stringify(check.user.billing_address)
+        );
+        window.localStorage.setItem(
+          "checkUserDefShippingAddress",
+          JSON.stringify(check.user.default_shipping_address)
+        );
+      }
+    }
   </script>
 </html>

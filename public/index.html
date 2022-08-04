@@ -14,6 +14,28 @@
     </div>
     <div id="listOfUsers"></div>
   </body>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    .nav {
+      padding: 10px;
+      background-color: black;
+      height: 80px;
+    }
+    .nav a {
+      line-height: 60px;
+    }
+    .nav a button {
+      height: 50px;
+      padding: 5px;
+      float: right;
+      gap: 25px;
+      margin: 5px;
+    }
+  </style>
   <script>
     let people = [];
     const users = document.getElementById("listOfUsers");
