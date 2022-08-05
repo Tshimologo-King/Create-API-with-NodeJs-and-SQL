@@ -55,49 +55,31 @@
         .then((data) => {
           console.log(data);
           window.localStorage.setItem("token", JSON.stringify(data.token));
+          verification(data.token);
         });
-      verification();
     });
 
-    async function verification() {
+    async function verification(boom) {
       const response = await fetch("http://localhost:6969/users/users/verify", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "x-auth-token": JSON.parse(localStorage.token),
+          "x-auth-token": `${boom}`,
         },
       });
+      const checks = await response.json();
+      console.log(checks);
+    }
 
-      let check = await response.json();
-      if (userEmail === "" || psw === "") {
-        alert("Please fill in the fields");
-        console.log(check);
-      } else {
-        window.localStorage.setItem(
-          "checkUserName",
-          JSON.stringify(check.user.full_name)
-        );
-        window.localStorage.setItem(
-          "checkUserId",
-          JSON.stringify(check.user.user_id)
-        );
-        window.localStorage.setItem(
-          "checkUserType",
-          JSON.stringify(check.user.user_type)
-        );
-        window.localStorage.setItem(
-          "checkUserCountry",
-          JSON.stringify(check.user.country)
-        );
-        window.localStorage.setItem(
-          "checkUserBillingAddress",
-          JSON.stringify(check.user.billing_address)
-        );
-        window.localStorage.setItem(
-          "checkUserDefShippingAddress",
-          JSON.stringify(check.user.default_shipping_address)
-        );
-      }
+    async function getUser() {
+      const response = await fetch("http://localhost:6969/users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const checks = await response.json();
+      console.log(checks);
     }
   </script>
 </html>
